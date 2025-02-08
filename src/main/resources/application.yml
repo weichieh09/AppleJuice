@@ -12,13 +12,26 @@ spring:
 
   # 資料庫連線設定
   datasource:
-    url: jdbc:mysql://localhost:3306/AppleJuice?useSSL=false&serverTimezone=Asia/Taipei  # 資料庫連線 URL，包含資料庫名稱、時區等設定
-    username: root  # 資料庫使用者名稱
-    password: root  # 資料庫密碼
-    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL 驅動程式的類別名稱
+    mysql:
+      url: jdbc:mysql://localhost:3306/AppleJuice?useSSL=false&serverTimezone=Asia/Taipei
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+    mssql:
+      url: jdbc:sqlserver://localhost:1433;databaseName=AppleJuice;encrypt=false
+      username: sa
+      password: 1qaz@WSX
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   # JPA 設定
   jpa:
-    hibernate:
-      ddl-auto: update  # 設定 Hibernate 自動管理資料庫結構，選擇 "update" 表示自動更新資料庫結構
     show-sql: true  # 是否在控制台顯示執行的 SQL 查詢語句，開啟方便除錯
+
+  # Flyway 設定
+  flyway:
+    enabled: true
+    url: ${spring.datasource.mysql.url}
+    user: ${spring.datasource.mysql.username}
+    password: ${spring.datasource.mysql.password}
+    locations: classpath:db/migration

@@ -54,6 +54,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- Microsoft SQL Server 連線驅動 -->
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 		<!-- Lombok 依賴，用於簡化 Java 程式碼 -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
