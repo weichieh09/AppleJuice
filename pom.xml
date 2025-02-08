@@ -26,6 +26,8 @@
 		<hutoolAll.version>5.8.24</hutoolAll.version>
 		<!-- 設定 SpringDoc OpenAPI 版本 -->
 		<springdocOpenapiUi.version>1.7.0</springdocOpenapiUi.version>
+		<!-- 設定 Liquibase 版本 -->
+		<liquibaseCore.version>4.24.0</liquibaseCore.version>
 	</properties>
 
 	<dependencies>
@@ -76,11 +78,18 @@
 			<version>${hutoolAll.version}</version>
 		</dependency>
 
-		<!-- SpringDoc OpenAPI 依賴 -->
+		<!-- SpringDoc OpenAPI 依賴，用於產生 OpenAPI 文件 -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>${springdocOpenapiUi.version}</version>
+		</dependency>
+
+		<!-- Liquibase 依賴，用於資料庫版本控制 -->
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>${liquibaseCore.version}</version>
 		</dependency>
 
 		<!-- 測試相關依賴 -->

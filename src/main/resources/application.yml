@@ -28,10 +28,11 @@ spring:
   jpa:
     show-sql: true  # 是否在控制台顯示執行的 SQL 查詢語句，開啟方便除錯
 
-  # Flyway 設定
-  flyway:
-    enabled: true
+  # Liquibase 設定
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.xml
+    # 管理 MySQL 資料庫
     url: ${spring.datasource.mysql.url}
     user: ${spring.datasource.mysql.username}
     password: ${spring.datasource.mysql.password}
-    locations: classpath:db/migration
+    driver-class-name: ${spring.datasource.mysql.driver-class-name}

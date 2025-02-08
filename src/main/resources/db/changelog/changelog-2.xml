@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2" author="jacky">
+        <comment>將 sample_table 改名為 Car，並將 name 欄位改為 brand</comment>
+        <sql>
+            <![CDATA[
+            RENAME TABLE sample_table TO Car;
+            ]]>
+        </sql>
+        <sql>
+            <![CDATA[
+            ALTER TABLE Car CHANGE name brand VARCHAR(255) NOT NULL;
+            ]]>
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
