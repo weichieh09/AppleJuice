@@ -14,14 +14,14 @@ import java.util.Map;
 public abstract class AbstractDataSourceConfig {
 
     @Value("${spring.jpa.show-sql}")
-    private boolean showSql; // 是否顯示 SQL 語句
+    private boolean SHOW_SQL; // 是否顯示 SQL 語句
 
     /**
      * 設定 JPA 相關屬性，例如 Hibernate 自動建表策略與 SQL 顯示選項。
      */
     protected Map<String, Object> jpaProperties() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.show_sql", showSql);
+        properties.put("hibernate.show_sql", SHOW_SQL);
         return properties;
     }
 

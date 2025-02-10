@@ -10,6 +10,11 @@ spring:
   # 安全性設定
   security:
 
+  # JWT 設定
+  jwt:
+    secret: mySecretKey123
+    expiration: 300  # 秒
+
   # 資料庫連線設定
   datasource:
     mysql:
@@ -18,11 +23,11 @@ spring:
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
 
-    mssql:
-      url: jdbc:sqlserver://localhost:1433;databaseName=AppleJuice;encrypt=false
-      username: sa
-      password: 1qaz@WSX
-      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    mssql:
+#      url: jdbc:sqlserver://localhost:1433;databaseName=AppleJuice;encrypt=false
+#      username: sa
+#      password: 1qaz@WSX
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   # JPA 設定
   jpa:
@@ -30,6 +35,8 @@ spring:
 
   # Liquibase 設定
   liquibase:
+    enabled: true
+    # 設定 Liquibase 的變更日誌文件
     change-log: classpath:db/changelog/changelog-master.xml
     # 管理 MySQL 資料庫
     url: ${spring.datasource.mysql.url}

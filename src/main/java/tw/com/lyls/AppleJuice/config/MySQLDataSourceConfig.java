@@ -15,7 +15,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 /**
- * MySQL 資料來源配置類別。
+ * MySQL 的範例資料來源配置類別，注意 @Configuration、@EnableJpaRepositories、@Primary 與相關路徑的使用。
  * 設定 MySQL 連線資訊，並註冊對應的 EntityManagerFactory 與 TransactionManager。
  */
 @Configuration

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<databaseChangeLog 
+<databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
@@ -8,10 +8,15 @@
     <changeSet id="1" author="jacky">
         <sql>
             <![CDATA[
-            CREATE TABLE sample_table (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(255) NOT NULL
-            );
+            CREATE TABLE AppleJuice.user (
+	id BIGINT auto_increment NOT NULL,
+	username varchar(100) NOT NULL,
+	password varchar(100) NOT NULL,
+	CONSTRAINT NewTable_pk PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_0900_ai_ci;
             ]]>
         </sql>
     </changeSet>
