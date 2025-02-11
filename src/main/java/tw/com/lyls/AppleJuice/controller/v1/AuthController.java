@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +39,7 @@ public class AuthController {
             String token = jwtService.generateToken(reqVM.getUsername());
             return ResponseEntity.ok(token);
         } catch (AuthenticationException e) {
+            log.error("登入失敗，帳號：{}。", reqVM.getUsername(), e);
             return ResponseEntity.status(401).body("Invalid credentials");
         }
     }

@@ -1,5 +1,7 @@
 package tw.com.lyls.AppleJuice.filter;
 
+import cn.hutool.core.util.ObjUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import tw.com.lyls.AppleJuice.service.JwtService;
 
@@ -39,9 +40,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String username = null;
 
         // 2. 檢查 header 是否不為空且以 "Bearer " 開頭
-        if (StringUtils.hasText(header) && header.startsWith("Bearer ")) {
+        if (StrUtil.isNotBlank(header) && StrUtil.startWith(header, "Bearer ")) {
             // 從 header 中去除 "Bearer " 前綴，取出 JWT token 字串
-            token = header.substring(7);
+            token = StrUtil.subSuf(header, 7);
 
             // 3. 使用自定義工具驗證 token 是否有效（例如簽名正確、未過期）
             if (jwtService.validateToken(token)) {
@@ -51,13 +52,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         // 5. 若成功從 token 中取得 username 且目前安全上下文中尚未設置認證資訊
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (StrUtil.isNotBlank(username) &&
+                ObjUtil.isNull(SecurityContextHolder.getContext().getAuthentication())) {
             // 6. 根據 username 從資料庫中取得該用戶的詳細資訊
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             // 7. 根據取得的 UserDetails 建立一個認證 token
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities());
+            UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
             // 8. 設置其他認證相關資訊（例如來源 IP 等）
             authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 

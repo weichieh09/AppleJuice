@@ -7,8 +7,8 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "auth")
+public class Auth implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,10 +17,8 @@ public class User implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username")
-    private String username;
-
-    @Column(name = "password")
-    private String password;
+    // 角色名稱，如 ROLE_USER、ROLE_ADMIN 等
+    @Column(name = "role")
+    private String role;
 
 }

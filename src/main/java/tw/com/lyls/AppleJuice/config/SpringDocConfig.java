@@ -13,6 +13,7 @@ public class SpringDocConfig {
 
     /**
      * 設定 OpenAPI 文件的基本資訊。
+     *
      * @return 自訂的 OpenAPI 物件
      */
     @Bean

@@ -7,8 +7,8 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "rel_auth_permission")
+public class RelAuthPermission implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,10 +17,10 @@ public class User implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "auth_id")
+    private Long authId;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "permission_id")
+    private Long permissionId;
 
 }

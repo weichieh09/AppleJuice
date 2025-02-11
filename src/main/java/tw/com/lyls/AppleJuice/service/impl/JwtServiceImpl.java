@@ -1,9 +1,11 @@
 package tw.com.lyls.AppleJuice.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
 import cn.hutool.jwt.JWTValidator;
+import cn.hutool.jwt.signers.JWTSignerUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String extractUsername(String token) {
-        if (token == null || token.isEmpty()) {
+        if (StrUtil.isBlank(token)) {
             return null;
         }
         JWT jwt = JWTUtil.parseToken(token);
@@ -40,18 +42,14 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public boolean validateToken(String token) {
-        // 驗證 token 是否有效。
-        boolean verify = JWTUtil.verify(token, SECRET_KEY.getBytes());
-        if (!verify) {
-            log.error("Token：{} is invalid.", token);
-            return false;
-        }
-        // 驗證 token 是否過期。
         try {
+            // 驗證 token 簽名是否正確。
+            JWTValidator.of(token).validateAlgorithm(JWTSignerUtil.hs256(SECRET_KEY.getBytes()));
+            // 驗證 token 是否過期。
             JWTValidator.of(token).validateDate();
             return true;
         } catch (Exception e) {
-            log.error("Token：{} is expired: {}", token, e.getMessage());
+            log.error("Token：{} 驗證失敗。", token, e);
             return false;
         }
     }

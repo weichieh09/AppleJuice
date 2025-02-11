@@ -2,9 +2,8 @@ package tw.com.lyls.AppleJuice.repository.mysql;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import tw.com.lyls.AppleJuice.domain.mysql.User;
+import tw.com.lyls.AppleJuice.domain.mysql.Auth;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
+public interface AuthRepository extends JpaRepository<Auth, Long> {
 }
