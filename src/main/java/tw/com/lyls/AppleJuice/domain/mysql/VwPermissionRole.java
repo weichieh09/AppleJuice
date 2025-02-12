@@ -7,8 +7,8 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "view_auth_permission")
-public class ViewAuthPermission implements Serializable {
+@Table(name = "vw_permission_role")
+public class VwPermissionRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,11 +17,11 @@ public class ViewAuthPermission implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "auth_id")
-    private Long authId;
+    @Column(name = "role_id")
+    private Long roleId;
 
-    @Column(name = "auth_role")
-    private String authRole;
+    @Column(name = "role_name")
+    private String roleName;
 
     @Column(name = "permission_id")
     private Long permissionId;

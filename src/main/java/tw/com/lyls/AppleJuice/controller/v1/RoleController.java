@@ -17,9 +17,9 @@ import tw.com.lyls.AppleJuice.service.vm.LoginReqVM;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/v1/role")
 @Tag(name = "Demo API", description = "示範 SpringDoc OpenAPI 使用方式")
-public class AuthController {
+public class RoleController {
 
     @Autowired
     private AuthenticationManager authenticationManager;

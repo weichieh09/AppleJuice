@@ -6,7 +6,7 @@ import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
-import tw.com.lyls.AppleJuice.repository.mysql.ViewAuthPermissionRepository;
+import tw.com.lyls.AppleJuice.repository.mysql.VwPermissionRoleRepository;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class CustomPermissionEvaluator implements PermissionEvaluator {
 
     @Autowired
-    private ViewAuthPermissionRepository vwAuthPermissionRepository;
+    private VwPermissionRoleRepository vwAuthPermissionRepository;
 
     /**
      * 參數說明：
@@ -34,7 +34,7 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
         // 檢查當前使用者所有角色是否有對應資源與操作的權限
         for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
             String role = grantedAuthority.getAuthority();  // 例如 "ROLE_USER" 或 "ROLE_ADMIN"
-            boolean hasPerm = vwAuthPermissionRepository.existsByAuthRoleAndPermissionResourceAndPermissionOperation(role, resource, operation);
+            boolean hasPerm = vwAuthPermissionRepository.existsByRoleNameAndPermissionResourceAndPermissionOperation(role, resource, operation);
             if (hasPerm) {
                 return true;
             }

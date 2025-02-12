@@ -7,8 +7,8 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "rel_auth_permission")
-public class RelAuthPermission implements Serializable {
+@Table(name = "rel_permission_role")
+public class RelPermissionRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,8 +17,8 @@ public class RelAuthPermission implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "auth_id")
-    private Long authId;
+    @Column(name = "role_id")
+    private Long roleId;
 
     @Column(name = "permission_id")
     private Long permissionId;

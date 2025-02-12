@@ -11,9 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tw.com.lyls.AppleJuice.domain.mysql.User;
-import tw.com.lyls.AppleJuice.domain.mysql.ViewAuthUser;
+import tw.com.lyls.AppleJuice.domain.mysql.VwRoleUser;
 import tw.com.lyls.AppleJuice.repository.mysql.UserRepository;
-import tw.com.lyls.AppleJuice.repository.mysql.ViewAuthUserRepository;
+import tw.com.lyls.AppleJuice.repository.mysql.VwRoleUserRepository;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    private ViewAuthUserRepository viewAuthUserRepository;
+    private VwRoleUserRepository vwRoleUserRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -36,8 +36,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         // 查腳色
-        List<ViewAuthUser> ViewAuthUserList = viewAuthUserRepository.findByUserId(user.getId());
-        List<String> authRoleList = CollStreamUtil.toList(ViewAuthUserList, ViewAuthUser::getAuthRole);
+        List<VwRoleUser> vwRoleUserList = vwRoleUserRepository.findByUserId(user.getId());
+        List<String> authRoleList = CollStreamUtil.toList(vwRoleUserList, VwRoleUser::getRoleName);
         List<SimpleGrantedAuthority> authorities = CollStreamUtil.toList(authRoleList, SimpleGrantedAuthority::new);
 
         // 將查詢到的用戶資料轉換成 Spring Security 使用的 UserDetails
