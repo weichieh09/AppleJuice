@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 @Slf4j
 @Component
-public class CustomPermissionEvaluator implements PermissionEvaluator {
+public class SecurityPermissionEvaluator implements PermissionEvaluator {
 
     @Autowired
     private VwPermissionRoleRepository vwAuthPermissionRepository;

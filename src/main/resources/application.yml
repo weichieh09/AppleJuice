@@ -43,3 +43,15 @@ spring:
     user: ${spring.datasource.mysql.username}
     password: ${spring.datasource.mysql.password}
     driver-class-name: ${spring.datasource.mysql.driver-class-name}
+
+## 設定日誌級別
+#logging:
+#  level:
+#    root: INFO
+#    org.springframework: INFO
+#    com.applejuice: INFO
+#  file:
+#    path: logs
+#  pattern:
+#    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{36}) [%X{traceId}] - %msg%n"
+#    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} [%X{traceId}] - %msg%n"

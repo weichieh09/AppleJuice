@@ -6,7 +6,7 @@ import org.springframework.security.access.expression.method.DefaultMethodSecuri
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
-import tw.com.lyls.AppleJuice.component.CustomPermissionEvaluator;
+import tw.com.lyls.AppleJuice.component.SecurityPermissionEvaluator;
 
 /**
  * 方法級別的安全性配置類，用於啟用 Spring Security 的方法安全控制。
@@ -16,17 +16,17 @@ import tw.com.lyls.AppleJuice.component.CustomPermissionEvaluator;
  */
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
+public class SecurityMethodConfig extends GlobalMethodSecurityConfiguration {
 
     /**
      * 自訂的權限評估器 (PermissionEvaluator)，用於擴展 Spring Security 的權限驗證邏輯。
      */
     @Autowired
-    private CustomPermissionEvaluator customPermissionEvaluator;
+    private SecurityPermissionEvaluator securityPermissionEvaluator;
 
     /**
      * 設定方法安全性表達式處理器 (MethodSecurityExpressionHandler)，
-     * 並將自訂的權限評估器 (customPermissionEvaluator) 設置進入處理器中，
+     * 並將自訂的權限評估器 (securityPermissionEvaluator) 設置進入處理器中，
      * 讓方法級別的安全性檢查可以使用自訂的權限驗證邏輯。
      *
      * @return 方法安全性表達式處理器
@@ -34,7 +34,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     @Override
     protected MethodSecurityExpressionHandler createExpressionHandler() {
         DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
-        expressionHandler.setPermissionEvaluator(customPermissionEvaluator);
+        expressionHandler.setPermissionEvaluator(securityPermissionEvaluator);
         return expressionHandler;
     }
 

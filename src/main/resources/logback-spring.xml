@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--
+      定義日誌輸出路徑與檔名：
+      若有設定環境變數 LOG_PATH 則使用，否則預設為 logs 目錄，
+      日誌檔案名稱將包含當前日期 (YYYYMMDD)，例如 applejuice.20250213.log。
+    -->
+    <property name="LOG_PATH" value="${LOG_PATH:-logs}" />
+    <!-- timestamp 標籤可用於定義全域日期變數，但此處由 fileNamePattern 動態產生 -->
+    <timestamp key="currentDate" datePattern="yyyyMMdd"/>
+
+    <!--
+      Console Appender：
+      使用 %highlight 高亮顯示不同等級的日誌，並在 pattern 中加入 MDC 變數 traceId，
+      方便追蹤每個請求的唯一識別碼。
+    -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %highlight(%-5level) %cyan(%logger{36}) [%X{traceId}] - %msg%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--
+      File Appender：
+      使用 RollingFileAppender 可每日滾動（依日期命名），並保留一定天數的歷史檔案，
+      同樣在 pattern 中加入 MDC 變數 traceId。
+      這裡不設定 <file> 屬性，讓 active log 檔案名稱直接由 fileNamePattern 產生，包含當前日期 (YYYYMMDD)。
+    -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 移除 file 屬性 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每日滾動，檔名格式為 applejuice.YYYYMMDD.log -->
+            <fileNamePattern>${LOG_PATH}/applejuice.%d{yyyyMMdd}.log</fileNamePattern>
+            <!-- 最多保留 30 天的歷史日誌 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} [%X{traceId}] - %msg%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--
+      定義日誌輸出層級與使用的 appender：
+      將 root logger 的層級設為 INFO，並同時輸出到 CONSOLE 與 FILE。
+    -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+
+    <!-- 可依需求另外調整其他 logger 的輸出層級 -->
+    <logger name="org.springframework" level="INFO" />
+    <logger name="org.hibernate" level="INFO" />
+    <logger name="com.applejuice" level="INFO" />
+</configuration>

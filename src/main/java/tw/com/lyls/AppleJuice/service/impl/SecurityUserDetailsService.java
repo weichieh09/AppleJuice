@@ -19,7 +19,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class SecurityUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
