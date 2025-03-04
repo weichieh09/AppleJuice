@@ -9,9 +9,9 @@ public enum ErrorEnum {
 
     // @formatter:off
 
-    HTTP_UNAUTHORIZED("401", "Unauthorized"),
-    HTTP_FORBIDDEN("403", "Forbidden"),
-    HTTP_INTERNAL_ERROR("500", "Internal Server Error")
+    HTTP_UNAUTHORIZED("401", "身份驗證錯誤：Unauthorized"),
+    HTTP_FORBIDDEN("403", "權限驗證錯誤：Forbidden"),
+    HTTP_INTERNAL_ERROR("500", "伺服器錯誤：Internal Server Error"),
     ;
 
     // @formatter:on

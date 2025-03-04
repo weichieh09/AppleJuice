@@ -1,4 +1,4 @@
-package tw.com.lyls.AppleJuice.config;
+package tw.com.lyls.AppleJuice.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import tw.com.lyls.AppleJuice.component.SecurityAuthenticationEntryPoint;
 import tw.com.lyls.AppleJuice.filter.JwtAuthenticationFilter;
 import tw.com.lyls.AppleJuice.filter.TraceIdFilter;
 import tw.com.lyls.AppleJuice.service.impl.SecurityUserDetailsService;
@@ -24,6 +23,9 @@ import tw.com.lyls.AppleJuice.service.impl.SecurityUserDetailsService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private TraceIdFilter traceIdFilter;
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -59,7 +61,7 @@ public class SecurityConfig {
         // 在 UsernamePasswordAuthenticationFilter 前依序加入 TraceIdFilter 與 JWT 檢查過濾器
         // TraceIdFilter 會在請求到達 Controller 前先賦予 traceId
         http
-                .addFilterBefore(traceIdFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(traceIdFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .authenticationEntryPoint(securityAuthenticationEntryPoint);
@@ -105,15 +107,4 @@ public class SecurityConfig {
         return NoOpPasswordEncoder.getInstance();
     }
 
-    /**
-     * 註冊 TraceIdFilter 的 Bean。
-     * 此過濾器會為每個 HTTP 請求生成或提取 traceId，並將其放入 MDC 中，
-     * 方便跨層級的日誌追蹤。
-     *
-     * @return TraceIdFilter 物件
-     */
-    @Bean
-    public TraceIdFilter traceIdFilter() {
-        return new TraceIdFilter();
-    }
 }

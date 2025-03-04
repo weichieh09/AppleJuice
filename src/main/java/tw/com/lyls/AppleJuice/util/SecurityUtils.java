@@ -15,8 +15,6 @@ import java.util.stream.Stream;
  */
 public final class SecurityUtils {
 
-    private SecurityUtils() {}
-
     /**
      * 取得當前使用者的登入名稱。
      *

@@ -1,4 +1,4 @@
-package tw.com.lyls.AppleJuice.config;
+package tw.com.lyls.AppleJuice.config.database;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;

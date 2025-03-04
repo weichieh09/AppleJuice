@@ -1,4 +1,4 @@
-package tw.com.lyls.AppleJuice.component;
+package tw.com.lyls.AppleJuice.config.security;
 
 import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONUtil;
@@ -7,7 +7,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import tw.com.lyls.AppleJuice.enums.ErrorEnum;
-import tw.com.lyls.AppleJuice.service.vm.ErrorRespVM;
+import tw.com.lyls.AppleJuice.service.vm.RespVM;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +29,9 @@ public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoin
      * @throws ServletException 可能發生的 Servlet 例外
      */
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request,
+                         HttpServletResponse response,
+                         AuthenticationException authException) throws IOException, ServletException {
         // 設置 HTTP 回應狀態碼為 401 未授權
         response.setStatus(HttpStatus.HTTP_UNAUTHORIZED);
 
@@ -38,10 +40,10 @@ public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoin
 
         // 回應錯誤訊息，封裝成標準錯誤格式的 JSON
         response.getWriter().write(
-                JSONUtil.toJsonStr(new ErrorRespVM(ErrorEnum.HTTP_UNAUTHORIZED))
+                JSONUtil.toJsonStr(new RespVM(ErrorEnum.HTTP_UNAUTHORIZED))
         );
 
         // 記錄未授權存取的日誌
-        log.warn("未授權的存取請求，請求 URI：{}", request.getRequestURI());
+        log.warn("身份驗證錯誤，請求 URI：{}", request.getRequestURI());
     }
 }

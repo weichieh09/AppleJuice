@@ -1,4 +1,4 @@
-package tw.com.lyls.AppleJuice.config;
+package tw.com.lyls.AppleJuice.config.openapi;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

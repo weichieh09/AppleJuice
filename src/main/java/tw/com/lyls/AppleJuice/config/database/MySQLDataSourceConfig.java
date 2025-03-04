@@ -1,4 +1,4 @@
-package tw.com.lyls.AppleJuice.config;
+package tw.com.lyls.AppleJuice.config.database;
 
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Qualifier;
