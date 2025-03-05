@@ -49,7 +49,7 @@ public class JwtServiceImpl implements JwtService {
             JWTValidator.of(token).validateDate();
             return true;
         } catch (Exception e) {
-            log.error("驗證 JWT 失敗，token：{}。", token, e);
+            log.warn("驗證 JWT 失敗，token：{}。", token, e);
             return false;
         }
     }

@@ -44,6 +44,6 @@ public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoin
         );
 
         // 記錄未授權存取的日誌
-        log.warn("身份驗證錯誤，請求 URI：{}", request.getRequestURI());
+        log.warn("錯誤：{}，錯誤訊息：{}。", request.getRequestURI(), ErrorEnum.HTTP_UNAUTHORIZED.getMessage());
     }
 }

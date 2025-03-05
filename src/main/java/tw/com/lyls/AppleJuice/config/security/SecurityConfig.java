@@ -15,7 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tw.com.lyls.AppleJuice.filter.JwtAuthenticationFilter;
 import tw.com.lyls.AppleJuice.filter.TraceIdFilter;
-import tw.com.lyls.AppleJuice.service.impl.SecurityUserDetailsService;
 
 /**
  * 安全性配置類別，負責設定應用程式的安全性規則。

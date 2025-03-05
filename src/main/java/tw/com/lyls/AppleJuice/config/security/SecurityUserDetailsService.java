@@ -1,4 +1,4 @@
-package tw.com.lyls.AppleJuice.service.impl;
+package tw.com.lyls.AppleJuice.config.security;
 
 import cn.hutool.core.collection.CollStreamUtil;
 import cn.hutool.core.util.ObjUtil;
@@ -40,11 +40,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
         List<String> authRoleList = CollStreamUtil.toList(vwRoleUserList, VwRoleUser::getRoleName);
         List<SimpleGrantedAuthority> authorities = CollStreamUtil.toList(authRoleList, SimpleGrantedAuthority::new);
 
-        // 將查詢到的用戶資料轉換成 Spring Security 使用的 UserDetails
-        // 此處僅設置空的權限列表，實際應用中可以依據需要設定相應的角色或權限
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                authorities);
+        // 回傳自訂的 UserDetails
+        return new SecurityUserDetails(user, authorities);
     }
 }
