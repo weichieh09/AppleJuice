@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="250306-01" author="jacky">
+        <comment>建立 menu 表</comment>
+        <sql>
+            <![CDATA[
+CREATE TABLE applejuice.menu (
+	id BIGINT auto_increment NOT NULL,
+	parent_id BIGINT NOT NULL COMMENT '父節點id',
+	name varchar(100) NOT NULL,
+	weight BIGINT DEFAULT 0 NOT NULL COMMENT '順序：越小優先級越高',
+	CONSTRAINT menu_pk PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_0900_ai_ci
+AUTO_INCREMENT=1;
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="250306-02" author="jacky">
+        <comment>建立 rel_menu_role 關聯表</comment>
+        <sql>
+            <![CDATA[
+CREATE TABLE applejuice.rel_menu_role (
+    id BIGINT auto_increment NOT NULL,
+    menu_id BIGINT NOT NULL,
+    role_id BIGINT NOT NULL,
+    CONSTRAINT rel_menu_role_pk PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_0900_ai_ci
+AUTO_INCREMENT=1;
+
+ALTER TABLE applejuice.rel_menu_role ADD CONSTRAINT rel_menu_role_menu_FK FOREIGN KEY (menu_id) REFERENCES applejuice.menu(id);
+ALTER TABLE applejuice.rel_menu_role ADD CONSTRAINT rel_menu_role_role_FK FOREIGN KEY (role_id) REFERENCES applejuice.role(id);
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="250306-03" author="jacky">
+        <comment>建立 vw_menu_role 視圖</comment>
+        <sql>
+            <![CDATA[
+CREATE OR REPLACE VIEW applejuice.vw_menu_role AS
+SELECT
+    `rmr`.`id` AS `id`,
+    `r`.`id` AS `role_id`,
+    `r`.`name` AS `role_name`,
+    `m`.`id` AS `menu_id`,
+    `m`.`parent_id` AS `menu_parent_id`,
+    `m`.`name` AS `menu_name`,
+    `m`.`weight` AS `menu_weight`
+FROM
+    `applejuice`.`menu` `m`
+JOIN `applejuice`.`rel_menu_role` `rmr` ON `m`.`id` = `rmr`.`menu_id`
+JOIN `applejuice`.`role` `r` ON `rmr`.`role_id` = `r`.`id`;
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="250306-04" author="jacky">
+        <comment>刪除 vw_permission_role 視圖</comment>
+        <sql>
+            <![CDATA[
+DROP VIEW IF EXISTS applejuice.vw_permission_role;
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="250306-05" author="jacky">
+        <comment>刪除 rel_permission_role 關聯表</comment>
+        <sql>
+            <![CDATA[
+DROP TABLE IF EXISTS applejuice.rel_permission_role;
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="250306-06" author="jacky">
+        <comment>建立 rel_menu_permission 關聯表</comment>
+        <sql>
+            <![CDATA[
+CREATE TABLE applejuice.rel_menu_permission (
+    id BIGINT auto_increment NOT NULL,
+    menu_id BIGINT NOT NULL,
+    permission_id BIGINT NOT NULL,
+    CONSTRAINT rel_menu_permission_pk PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_0900_ai_ci
+AUTO_INCREMENT=1;
+
+ALTER TABLE applejuice.rel_menu_permission ADD CONSTRAINT rel_menu_permission_menu_FK FOREIGN KEY (menu_id) REFERENCES applejuice.menu(id);
+ALTER TABLE applejuice.rel_menu_permission ADD CONSTRAINT rel_menu_permission_permission_FK FOREIGN KEY (permission_id) REFERENCES applejuice.permission(id);
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="250306-07" author="jacky">
+        <comment>建立 vw_menu_permission 視圖</comment>
+        <sql>
+            <![CDATA[
+CREATE OR REPLACE VIEW applejuice.vw_menu_permission AS
+SELECT
+    `rmp`.`id` AS `id`,
+    `m`.`id` AS `menu_id`,
+    `m`.`name` AS `menu_name`,
+    `p`.`id` AS `permission_id`,
+    `p`.`resource` AS `permission_resource`,
+    `p`.`operation` AS `permission_operation`
+FROM
+    `applejuice`.`permission` `p`
+JOIN `applejuice`.`rel_menu_permission` `rmp` ON `p`.`id` = `rmp`.`permission_id`
+JOIN `applejuice`.`menu` `m` ON `rmp`.`menu_id` = `m`.`id`;
+            ]]>
+        </sql>
+    </changeSet>
+
+    <changeSet id="250306-08" author="jacky">
+        <comment>建立 vw_permission_role 視圖</comment>
+        <sql>
+            <![CDATA[
+CREATE OR REPLACE VIEW vw_permission_role AS
+SELECT
+    ROW_NUMBER() OVER (ORDER BY rmr.id) AS id,  -- 自增長 ID
+    r.id AS role_id,
+    r.name AS role_name,
+    p.id AS permission_id,
+    p.resource AS permission_resource,
+    p.operation AS permission_operation
+FROM rel_menu_role rmr
+JOIN role r ON rmr.role_id = r.id
+JOIN menu m ON rmr.menu_id = m.id
+JOIN rel_menu_permission rmp ON m.id = rmp.menu_id
+JOIN permission p ON rmp.permission_id = p.id;
+            ]]>
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

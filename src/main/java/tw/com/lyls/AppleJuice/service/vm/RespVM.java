@@ -27,4 +27,11 @@ public class RespVM {
         this.data = data;
     }
 
+    public RespVM() {
+        this.code = HttpStatus.HTTP_OK + "";
+        this.message = "";
+        this.traceId = MDC.get("traceId");
+        this.data = "";
+    }
+
 }

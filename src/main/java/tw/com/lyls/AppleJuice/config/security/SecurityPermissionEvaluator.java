@@ -39,6 +39,7 @@ public class SecurityPermissionEvaluator implements PermissionEvaluator {
                 return true;
             }
         }
+        log.warn("使用者：{}，角色：{}，沒有權限執行：{}，操作：{}。", authentication.getName(), authentication.getAuthorities(), resource, operation);
         return false;
     }
 
