@@ -52,7 +52,7 @@ public class RoleController {
 
             return ResponseEntity.ok(new RespVM(resultMap));
         } catch (Exception e) {
-            log.warn("登入失敗，帳號：{}。", reqVM.getUsername(), e);
+            log.warn("帳號：{}，登入失敗，錯誤訊息：{}。", reqVM.getUsername(), e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.HTTP_UNAUTHORIZED).body(new RespVM(ErrorEnum.HTTP_UNAUTHORIZED));
         }
     }
