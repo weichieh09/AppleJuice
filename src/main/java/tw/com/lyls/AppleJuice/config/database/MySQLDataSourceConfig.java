@@ -4,6 +4,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -34,9 +35,10 @@ public class MySQLDataSourceConfig extends AbstractDataSourceConfig {
     private String driverClassName;
 
     /**
-     * 設定 MySQL 為主要資料來源。
+     * 設定 MySQL 為主要資料來源，並加入 @RefreshScope 以支援動態刷新。
      */
     @Primary
+    @RefreshScope
     @Bean(name = "mysqlDataSource")
     public DataSource mysqlDataSource() {
         return DataSourceBuilder.create()

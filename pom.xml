@@ -20,14 +20,16 @@
 	<properties>
 		<!-- 設定 Java 版本 -->
 		<java.version>11</java.version>
+		<!-- 設定 Spring Cloud 版本 -->
+		<spring-cloud.version>2021.0.8</spring-cloud.version>
 		<!-- 設定 Lombok 版本 -->
 		<lombok.version>1.18.30</lombok.version>
 		<!-- 設定 Hutool 版本 -->
-		<hutoolAll.version>5.8.24</hutoolAll.version>
+		<hutool-all.version>5.8.24</hutool-all.version>
 		<!-- 設定 SpringDoc OpenAPI 版本 -->
-		<springdocOpenapiUi.version>1.7.0</springdocOpenapiUi.version>
+		<springdoc.version>1.7.0</springdoc.version>
 		<!-- 設定 Liquibase 版本 -->
-		<liquibaseCore.version>4.24.0</liquibaseCore.version>
+		<liquibase.version>4.24.0</liquibase.version>
 	</properties>
 
 	<dependencies>
@@ -75,21 +77,39 @@
 		<dependency>
 			<groupId>cn.hutool</groupId>
 			<artifactId>hutool-all</artifactId>
-			<version>${hutoolAll.version}</version>
+			<version>${hutool-all.version}</version>
 		</dependency>
 
 		<!-- SpringDoc OpenAPI 依賴，用於產生 OpenAPI 文件 -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>${springdocOpenapiUi.version}</version>
+			<version>${springdoc.version}</version>
 		</dependency>
 
 		<!-- Liquibase 依賴，用於資料庫版本控制 -->
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
-			<version>${liquibaseCore.version}</version>
+			<version>${liquibase.version}</version>
+		</dependency>
+
+		<!-- Spring Boot Actuator 依賴 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- Spring Cloud Config 依賴 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-vault-config</artifactId>
+		</dependency>
+
+		<!-- Spring Cloud Context 依賴 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-context</artifactId>
 		</dependency>
 
 		<!-- 測試相關依賴 -->
@@ -104,6 +124,19 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Spring Cloud 依賴管理 -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>

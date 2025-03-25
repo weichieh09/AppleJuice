@@ -54,8 +54,10 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Swagger UI 與 API Docs 不需要驗證
-                .antMatchers("/api/v2/**").authenticated() // API v2 需要驗證
-                .anyRequest().permitAll();
+                .antMatchers("/monitor/health").permitAll() // 允許 health 端點公開
+                .antMatchers("/monitor/refresh").permitAll() // 允許 refresh 端點公開
+                .antMatchers("/api/v1/**").permitAll() // API v1 不需要驗證
+                .anyRequest().authenticated();
 
         // 在 UsernamePasswordAuthenticationFilter 前依序加入 TraceIdFilter 與 JWT 檢查過濾器
         // TraceIdFilter 會在請求到達 Controller 前先賦予 traceId

@@ -6,21 +6,35 @@ spring:
   # 設定應用程式名稱
   application:
     name: AppleJuice
+  config:
+    import: vault://
+  cloud:
+    vault:
+      uri: http://localhost:8200
+      token: xxx
+      kv:
+        enabled: true
+        backend: secret
+        default-context: AppleJuice
 
   # 安全性設定
   security:
 
   # JWT 設定
   jwt:
-    secret: mySecretKey123
+#    secret: mySecretKey123
+    secret: ${jwt.secret}  # 從 Vault 獲取 JWT 密鑰
     expiration: 300  # 秒
 
   # 資料庫連線設定
   datasource:
     mysql:
-      url: jdbc:mysql://localhost:3306/AppleJuice?useSSL=false&serverTimezone=Asia/Taipei
-      username: root
-      password: root
+#      url: jdbc:mysql://localhost:3306/AppleJuice?useSSL=false&serverTimezone=Asia/Taipei
+#      username: root
+#      password: root
+      url: ${mysql.url}  # 從 Vault 獲取 MySQL 連線 URL
+      username: ${mysql.username}  # 從 Vault 獲取 MySQL 用戶名
+      password: ${mysql.password}  # 從 Vault 獲取 MySQL 密碼
       driver-class-name: com.mysql.cj.jdbc.Driver
 
 #    mssql:
@@ -43,3 +57,14 @@ spring:
     user: ${spring.datasource.mysql.username}
     password: ${spring.datasource.mysql.password}
     driver-class-name: ${spring.datasource.mysql.driver-class-name}
+
+# 監控端點設定
+management:
+  endpoint:
+    health:
+      show-details: always  # 顯示所有健康檢查器的詳細資訊
+  endpoints:
+    web:
+      base-path: /monitor # 監控端點的基本路徑
+      exposure:
+        include: refresh,health  # 啟用 refresh 端點
