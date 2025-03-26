@@ -1,10 +1,10 @@
 package tw.com.lyls.AppleJuice.config.database;
 
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -19,6 +19,7 @@ import javax.sql.DataSource;
  * MySQL 的範例資料來源配置類別，注意 @Configuration、@EnableJpaRepositories、@Primary 與相關路徑的使用。
  * 設定 MySQL 連線資訊，並註冊對應的 EntityManagerFactory 與 TransactionManager。
  */
+@Slf4j
 @Configuration
 @Setter
 @ConfigurationProperties(prefix = "spring.datasource.mysql")
@@ -38,9 +39,9 @@ public class MySQLDataSourceConfig extends AbstractDataSourceConfig {
      * 設定 MySQL 為主要資料來源，並加入 @RefreshScope 以支援動態刷新。
      */
     @Primary
-    @RefreshScope
     @Bean(name = "mysqlDataSource")
     public DataSource mysqlDataSource() {
+        log.info("MySQL 資料源初始化 - url：{}, username：{}。", url, username);
         return DataSourceBuilder.create()
                 .url(url)
                 .username(username)

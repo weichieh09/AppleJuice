@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="250326-01" author="jacky">
+        <comment>寫入範例資料</comment>
+        <sql>
+            <![CDATA[
+INSERT INTO applejuice.`user` (username, password) VALUES ('admin', 'admin');
+INSERT INTO applejuice.`user` (username, password) VALUES ('user', 'user');
+INSERT INTO applejuice.`role` (name) VALUES ('ADMIN');
+INSERT INTO applejuice.`role` (name) VALUES ('USER');
+INSERT INTO applejuice.product (name, description, price) VALUES ('哀鳳八', '讓你潮到發發發！', 8888);
+INSERT INTO applejuice.product (name, description, price) VALUES ('小米酒', '用了就醉不用懷疑！', 666);
+INSERT INTO applejuice.product (name, description, price) VALUES ('完美十', '經典永流傳！', 10);
+INSERT INTO applejuice.permission (resource, operation) VALUES ('PRODUCT', 'CREATE');
+INSERT INTO applejuice.permission (resource, operation) VALUES ('PRODUCT', 'DELETE');
+INSERT INTO applejuice.permission (resource, operation) VALUES ('PRODUCT', 'EDIT');
+INSERT INTO applejuice.permission (resource, operation) VALUES ('PRODUCT', 'VIEW');
+INSERT INTO applejuice.menu (parent_id, name, weight) VALUES (0, '產品管理', 0);
+INSERT INTO applejuice.menu (parent_id, name, weight) VALUES (1, '新增', 0);
+INSERT INTO applejuice.menu (parent_id, name, weight) VALUES (1, '刪除', 0);
+INSERT INTO applejuice.menu (parent_id, name, weight) VALUES (1, '修改', 0);
+INSERT INTO applejuice.menu (parent_id, name, weight) VALUES (1, '查詢', 0);
+INSERT INTO applejuice.rel_role_user (role_id, user_id) VALUES (1, 1);
+INSERT INTO applejuice.rel_role_user (role_id, user_id) VALUES (2, 2);
+INSERT INTO applejuice.rel_menu_role (menu_id, role_id) VALUES (1, 1);
+INSERT INTO applejuice.rel_menu_role (menu_id, role_id) VALUES (2, 1);
+INSERT INTO applejuice.rel_menu_role (menu_id, role_id) VALUES (3, 1);
+INSERT INTO applejuice.rel_menu_role (menu_id, role_id) VALUES (4, 1);
+INSERT INTO applejuice.rel_menu_role (menu_id, role_id) VALUES (5, 1);
+INSERT INTO applejuice.rel_menu_role (menu_id, role_id) VALUES (1, 2);
+INSERT INTO applejuice.rel_menu_role (menu_id, role_id) VALUES (5, 2);
+INSERT INTO applejuice.rel_menu_permission (menu_id, permission_id) VALUES (2, 1);
+INSERT INTO applejuice.rel_menu_permission (menu_id, permission_id) VALUES (3, 2);
+INSERT INTO applejuice.rel_menu_permission (menu_id, permission_id) VALUES (4, 3);
+INSERT INTO applejuice.rel_menu_permission (menu_id, permission_id) VALUES (5, 4);
+]]>
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

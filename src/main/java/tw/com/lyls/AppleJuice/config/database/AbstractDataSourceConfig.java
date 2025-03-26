@@ -1,5 +1,6 @@
 package tw.com.lyls.AppleJuice.config.database;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -11,6 +12,7 @@ import java.util.Map;
 /**
  * 抽象資料來源配置類別，提供通用的 JPA 設定與 EntityManagerFactory 建立方法。
  */
+@Slf4j
 public abstract class AbstractDataSourceConfig {
 
     @Value("${spring.jpa.show-sql}")
