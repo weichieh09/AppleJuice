@@ -9,8 +9,8 @@
         <comment>修改 auth 表名稱為 role 及其欄位名稱為 name</comment>
         <sql>
             <![CDATA[
-RENAME TABLE applejuice.auth TO applejuice.`role`;
-ALTER TABLE applejuice.`role` CHANGE `role` name varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;
+RENAME TABLE AppleJuice.auth TO AppleJuice.`role`;
+ALTER TABLE AppleJuice.`role` CHANGE `role` name varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;
             ]]>
         </sql>
     </changeSet>
@@ -19,8 +19,8 @@ ALTER TABLE applejuice.`role` CHANGE `role` name varchar(100) CHARACTER SET utf8
         <comment>修改 rel_auth_permission 關聯表名稱為 rel_permission_role 及其欄位名稱為 role_id</comment>
         <sql>
             <![CDATA[
-RENAME TABLE applejuice.rel_auth_permission TO applejuice.rel_permission_role;
-ALTER TABLE applejuice.rel_permission_role CHANGE auth_id role_id bigint NOT NULL;
+RENAME TABLE AppleJuice.rel_auth_permission TO AppleJuice.rel_permission_role;
+ALTER TABLE AppleJuice.rel_permission_role CHANGE auth_id role_id bigint NOT NULL;
             ]]>
         </sql>
     </changeSet>
@@ -29,8 +29,8 @@ ALTER TABLE applejuice.rel_permission_role CHANGE auth_id role_id bigint NOT NUL
         <comment>修改 rel_auth_user 關聯表名稱為 rel_role_user 及其欄位名稱為 role_id</comment>
         <sql>
             <![CDATA[
-RENAME TABLE applejuice.rel_auth_user TO applejuice.rel_role_user;
-ALTER TABLE applejuice.rel_role_user CHANGE auth_id role_id bigint NOT NULL;
+RENAME TABLE AppleJuice.rel_auth_user TO AppleJuice.rel_role_user;
+ALTER TABLE AppleJuice.rel_role_user CHANGE auth_id role_id bigint NOT NULL;
             ]]>
         </sql>
     </changeSet>
@@ -39,8 +39,8 @@ ALTER TABLE applejuice.rel_role_user CHANGE auth_id role_id bigint NOT NULL;
         <comment>刪除 view_auth_permission 並建立 vw_permission_role 視圖</comment>
         <sql>
             <![CDATA[
-DROP VIEW IF EXISTS applejuice.view_auth_permission;
-CREATE OR REPLACE VIEW applejuice.vw_permission_role AS
+DROP VIEW IF EXISTS AppleJuice.view_auth_permission;
+CREATE OR REPLACE VIEW AppleJuice.vw_permission_role AS
 SELECT
     `rpr`.`id` AS `id`,
     `r`.`id` AS `role_id`,
@@ -49,9 +49,9 @@ SELECT
     `p`.`resource` AS `permission_resource`,
     `p`.`operation` AS `permission_operation`
 FROM
-    `applejuice`.`permission` `p`
-JOIN `applejuice`.`rel_permission_role` `rpr` ON `p`.`id` = `rpr`.`permission_id`
-JOIN `applejuice`.`role` `r` ON `rpr`.`role_id` = `r`.`id`;
+    `AppleJuice`.`permission` `p`
+JOIN `AppleJuice`.`rel_permission_role` `rpr` ON `p`.`id` = `rpr`.`permission_id`
+JOIN `AppleJuice`.`role` `r` ON `rpr`.`role_id` = `r`.`id`;
             ]]>
         </sql>
     </changeSet>
@@ -60,8 +60,8 @@ JOIN `applejuice`.`role` `r` ON `rpr`.`role_id` = `r`.`id`;
         <comment>刪除 view_auth_user 並建立 vw_role_user 視圖</comment>
         <sql>
             <![CDATA[
-DROP VIEW IF EXISTS applejuice.view_auth_user;
-CREATE OR REPLACE VIEW applejuice.vw_role_user AS
+DROP VIEW IF EXISTS AppleJuice.view_auth_user;
+CREATE OR REPLACE VIEW AppleJuice.vw_role_user AS
 SELECT
     `rru`.`id` AS `id`,
     `r`.`id` AS `role_id`,
@@ -70,9 +70,9 @@ SELECT
     `u`.`username` AS `user_username`,
     `u`.`password` AS `user_password`
 FROM
-    `applejuice`.`user` `u`
-JOIN `applejuice`.`rel_role_user` `rru` ON `u`.`id` = `rru`.`user_id`
-JOIN `applejuice`.`role` `r` ON `rru`.`role_id` = `r`.`id`;
+    `AppleJuice`.`user` `u`
+JOIN `AppleJuice`.`rel_role_user` `rru` ON `u`.`id` = `rru`.`user_id`
+JOIN `AppleJuice`.`role` `r` ON `rru`.`role_id` = `r`.`id`;
             ]]>
         </sql>
     </changeSet>

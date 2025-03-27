@@ -9,7 +9,7 @@
         <comment>建立 menu 表</comment>
         <sql>
             <![CDATA[
-CREATE TABLE applejuice.menu (
+CREATE TABLE AppleJuice.menu (
 	id BIGINT auto_increment NOT NULL,
 	parent_id BIGINT NOT NULL COMMENT '父節點id',
 	name varchar(100) NOT NULL,
@@ -28,7 +28,7 @@ AUTO_INCREMENT=1;
         <comment>建立 rel_menu_role 關聯表</comment>
         <sql>
             <![CDATA[
-CREATE TABLE applejuice.rel_menu_role (
+CREATE TABLE AppleJuice.rel_menu_role (
     id BIGINT auto_increment NOT NULL,
     menu_id BIGINT NOT NULL,
     role_id BIGINT NOT NULL,
@@ -39,8 +39,8 @@ DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_0900_ai_ci
 AUTO_INCREMENT=1;
 
-ALTER TABLE applejuice.rel_menu_role ADD CONSTRAINT rel_menu_role_menu_FK FOREIGN KEY (menu_id) REFERENCES applejuice.menu(id);
-ALTER TABLE applejuice.rel_menu_role ADD CONSTRAINT rel_menu_role_role_FK FOREIGN KEY (role_id) REFERENCES applejuice.role(id);
+ALTER TABLE AppleJuice.rel_menu_role ADD CONSTRAINT rel_menu_role_menu_FK FOREIGN KEY (menu_id) REFERENCES AppleJuice.menu(id);
+ALTER TABLE AppleJuice.rel_menu_role ADD CONSTRAINT rel_menu_role_role_FK FOREIGN KEY (role_id) REFERENCES AppleJuice.role(id);
             ]]>
         </sql>
     </changeSet>
@@ -49,7 +49,7 @@ ALTER TABLE applejuice.rel_menu_role ADD CONSTRAINT rel_menu_role_role_FK FOREIG
         <comment>建立 vw_menu_role 視圖</comment>
         <sql>
             <![CDATA[
-CREATE OR REPLACE VIEW applejuice.vw_menu_role AS
+CREATE OR REPLACE VIEW AppleJuice.vw_menu_role AS
 SELECT
     `rmr`.`id` AS `id`,
     `r`.`id` AS `role_id`,
@@ -59,9 +59,9 @@ SELECT
     `m`.`name` AS `menu_name`,
     `m`.`weight` AS `menu_weight`
 FROM
-    `applejuice`.`menu` `m`
-JOIN `applejuice`.`rel_menu_role` `rmr` ON `m`.`id` = `rmr`.`menu_id`
-JOIN `applejuice`.`role` `r` ON `rmr`.`role_id` = `r`.`id`;
+    `AppleJuice`.`menu` `m`
+JOIN `AppleJuice`.`rel_menu_role` `rmr` ON `m`.`id` = `rmr`.`menu_id`
+JOIN `AppleJuice`.`role` `r` ON `rmr`.`role_id` = `r`.`id`;
             ]]>
         </sql>
     </changeSet>
@@ -70,7 +70,7 @@ JOIN `applejuice`.`role` `r` ON `rmr`.`role_id` = `r`.`id`;
         <comment>刪除 vw_permission_role 視圖</comment>
         <sql>
             <![CDATA[
-DROP VIEW IF EXISTS applejuice.vw_permission_role;
+DROP VIEW IF EXISTS AppleJuice.vw_permission_role;
             ]]>
         </sql>
     </changeSet>
@@ -79,7 +79,7 @@ DROP VIEW IF EXISTS applejuice.vw_permission_role;
         <comment>刪除 rel_permission_role 關聯表</comment>
         <sql>
             <![CDATA[
-DROP TABLE IF EXISTS applejuice.rel_permission_role;
+DROP TABLE IF EXISTS AppleJuice.rel_permission_role;
             ]]>
         </sql>
     </changeSet>
@@ -88,7 +88,7 @@ DROP TABLE IF EXISTS applejuice.rel_permission_role;
         <comment>建立 rel_menu_permission 關聯表</comment>
         <sql>
             <![CDATA[
-CREATE TABLE applejuice.rel_menu_permission (
+CREATE TABLE AppleJuice.rel_menu_permission (
     id BIGINT auto_increment NOT NULL,
     menu_id BIGINT NOT NULL,
     permission_id BIGINT NOT NULL,
@@ -99,8 +99,8 @@ DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_0900_ai_ci
 AUTO_INCREMENT=1;
 
-ALTER TABLE applejuice.rel_menu_permission ADD CONSTRAINT rel_menu_permission_menu_FK FOREIGN KEY (menu_id) REFERENCES applejuice.menu(id);
-ALTER TABLE applejuice.rel_menu_permission ADD CONSTRAINT rel_menu_permission_permission_FK FOREIGN KEY (permission_id) REFERENCES applejuice.permission(id);
+ALTER TABLE AppleJuice.rel_menu_permission ADD CONSTRAINT rel_menu_permission_menu_FK FOREIGN KEY (menu_id) REFERENCES AppleJuice.menu(id);
+ALTER TABLE AppleJuice.rel_menu_permission ADD CONSTRAINT rel_menu_permission_permission_FK FOREIGN KEY (permission_id) REFERENCES AppleJuice.permission(id);
             ]]>
         </sql>
     </changeSet>
@@ -109,7 +109,7 @@ ALTER TABLE applejuice.rel_menu_permission ADD CONSTRAINT rel_menu_permission_pe
         <comment>建立 vw_menu_permission 視圖</comment>
         <sql>
             <![CDATA[
-CREATE OR REPLACE VIEW applejuice.vw_menu_permission AS
+CREATE OR REPLACE VIEW AppleJuice.vw_menu_permission AS
 SELECT
     `rmp`.`id` AS `id`,
     `m`.`id` AS `menu_id`,
@@ -118,9 +118,9 @@ SELECT
     `p`.`resource` AS `permission_resource`,
     `p`.`operation` AS `permission_operation`
 FROM
-    `applejuice`.`permission` `p`
-JOIN `applejuice`.`rel_menu_permission` `rmp` ON `p`.`id` = `rmp`.`permission_id`
-JOIN `applejuice`.`menu` `m` ON `rmp`.`menu_id` = `m`.`id`;
+    `AppleJuice`.`permission` `p`
+JOIN `AppleJuice`.`rel_menu_permission` `rmp` ON `p`.`id` = `rmp`.`permission_id`
+JOIN `AppleJuice`.`menu` `m` ON `rmp`.`menu_id` = `m`.`id`;
             ]]>
         </sql>
     </changeSet>
