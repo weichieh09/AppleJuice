@@ -84,7 +84,7 @@ JOIN applejuice.auth a ON rau.auth_id = a.id;
         <comment>建立 permission 表</comment>
         <sql>
             <![CDATA[
-CREATE TABLE AppleJuice.permission (
+CREATE TABLE applejuice.permission (
 	id BIGINT auto_increment NOT NULL,
 	resource varchar(100) NULL,
 	operation varchar(100) NULL,
@@ -102,7 +102,7 @@ AUTO_INCREMENT=1;
         <comment>建立 rel_auth_permission 關聯表</comment>
         <sql>
             <![CDATA[
-CREATE TABLE AppleJuice.rel_auth_permission (
+CREATE TABLE applejuice.rel_auth_permission (
 	id BIGINT auto_increment NOT NULL,
 	auth_id BIGINT NOT NULL,
 	permission_id BIGINT NOT NULL,
@@ -123,7 +123,7 @@ ALTER TABLE applejuice.rel_auth_permission ADD CONSTRAINT rel_auth_permission_pe
         <comment>建立 view_auth_permission 視圖</comment>
         <sql>
             <![CDATA[
-CREATE VIEW AppleJuice.view_auth_permission AS
+CREATE VIEW applejuice.view_auth_permission AS
 SELECT
     rap.id AS id,
     a.id AS auth_id,
@@ -131,9 +131,9 @@ SELECT
     p.id AS permission_id,
     p.resource AS permission_resource,
     p.operation AS permission_operation
-FROM AppleJuice.permission p
-JOIN AppleJuice.rel_auth_permission rap ON p.id = rap.permission_id
-JOIN AppleJuice.auth a ON rap.auth_id = a.id;
+FROM applejuice.permission p
+JOIN applejuice.rel_auth_permission rap ON p.id = rap.permission_id
+JOIN applejuice.auth a ON rap.auth_id = a.id;
             ]]>
         </sql>
     </changeSet>
