@@ -6,35 +6,36 @@ spring:
   # 設定應用程式名稱
   application:
     name: AppleJuice
-  config:
-    import: vault://
   cloud:
     vault:
+      enabled: false
       uri: http://localhost:8200
       token: xxx
       kv:
         enabled: true
         backend: secret
         default-context: AppleJuice
+#  config: # 對應 vault 開啟關閉而註解
+#    import: vault://
 
   # 安全性設定
   security:
 
   # JWT 設定
   jwt:
-#    secret: mySecretKey123
-    secret: ${vault.jwt.secret}  # 從 Vault 獲取 JWT 密鑰
+    secret: mySecretKey123
+#    secret: ${vault.jwt.secret}  # 從 Vault 獲取 JWT 密鑰
     expiration: 300  # 秒
 
   # 資料庫連線設定
   datasource:
     mysql:
-#      url: jdbc:mysql://localhost:3306/AppleJuice?useSSL=false&serverTimezone=Asia/Taipei
-#      username: root
-#      password: root
-      url: ${vault.mysql.url}  # 從 Vault 獲取 MySQL 連線 URL
-      username: ${vault.mysql.username}  # 從 Vault 獲取 MySQL 用戶名
-      password: ${vault.mysql.password}  # 從 Vault 獲取 MySQL 密碼
+      url: jdbc:mysql://localhost:3306/AppleJuice?useSSL=false&serverTimezone=Asia/Taipei
+      username: root
+      password: root
+#      url: ${vault.mysql.url}  # 從 Vault 獲取 MySQL 連線 URL
+#      username: ${vault.mysql.username}  # 從 Vault 獲取 MySQL 用戶名
+#      password: ${vault.mysql.password}  # 從 Vault 獲取 MySQL 密碼
       driver-class-name: com.mysql.cj.jdbc.Driver
 
 #    mssql:
